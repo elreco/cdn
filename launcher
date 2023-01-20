@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body cz-shortcut-listen="true">class PongoLauncher {
+class PongoLauncher {
   constructor(position, color, icon, url) {
     this.position = position
     this.color = color
@@ -189,14 +189,14 @@
     `
     closeBtn.appendChild(closeBtnIcon)
     document.body.appendChild(ifrmContainer)
-    ifrm.onload = () =&gt; {
+    ifrm.onload = () => {
       ifrmContainer.style.display = this.currentState === '0' ? 'none' : 'block'
       ifrmContainer.appendChild(closeBtn)
       this.#setIframeStyle(ifrmContainer, ifrm, widget, closeBtn)
       document.body.appendChild(container)
-      widget.addEventListener("click", () =&gt; this.#toggleVisibility(ifrmContainer, caretContainer, imgContainer, widgetPingAnimation, widget))
-      closeBtn.addEventListener("click", () =&gt; this.#toggleVisibility(ifrmContainer, caretContainer, imgContainer, widgetPingAnimation, widget))
-      window.addEventListener('resize', () =&gt; this.#setIframeStyle(ifrmContainer, ifrm, widget, closeBtn))
+      widget.addEventListener("click", () => this.#toggleVisibility(ifrmContainer, caretContainer, imgContainer, widgetPingAnimation, widget))
+      closeBtn.addEventListener("click", () => this.#toggleVisibility(ifrmContainer, caretContainer, imgContainer, widgetPingAnimation, widget))
+      window.addEventListener('resize', () => this.#setIframeStyle(ifrmContainer, ifrm, widget, closeBtn))
     }
 
   }
@@ -321,7 +321,7 @@
     } else {
       ifrmContainer.style.animation = fadeOutAnimation
       ifrmContainer.style.opacity = '0'
-      this.timeoutId = setTimeout(() =&gt; ifrmContainer.style.display = 'none', 400)
+      this.timeoutId = setTimeout(() => ifrmContainer.style.display = 'none', 400)
 
       caretContainer.style.opacity = '0'
       caretContainer.style.transform = 'rotate(-60deg)'
@@ -337,7 +337,7 @@
   }
 
   init() {
-    const messageHandler = (event) =&gt; {
+    const messageHandler = (event) => {
       if (event.data === '3pc.supported') {
         this.#buildWidget()
         window.removeEventListener('message', messageHandler)
@@ -355,4 +355,3 @@
 
 const pongoLauncher = new PongoLauncher('bottom-right', '124521', 'https://static.heypongo.com/api/gift-icon.png', 'https://game-contest-git-bug-alexandrelecorre-sc-6756-663f14-hey-pongo.vercel.app/patoche-burger-contest-game-test?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZGV2LWFwaS5oZXlwb25nby5jb20vYXV0aC9sb2dpbiIsImlhdCI6MTY3MzYwMzI3NywiZXhwIjo0ODA3Mzc1MTk5LCJuYmYiOjE2NzM2MDMyNzcsImp0aSI6InZSVDk0RHlrNGVoaVg2a2siLCJzdWIiOiIxMSIsInBydiI6ImFkNWYyYWEzMDAwMmM0NzBhNTk0MDYxYzE5MzBmOWFmYzZlNWQwY2QiLCJzdG9yZV9pZCI6MSwidHlwZSI6ImNvbnRlc3QtZ2FtZSJ9.kFaFOInCC82VAIP34KKKncDvBzD67S5qI5xsIPLBF3c')
 document.onload = pongoLauncher.init()
-</body></html>
