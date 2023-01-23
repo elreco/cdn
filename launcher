@@ -78,6 +78,7 @@ class PongoLauncher {
     container.appendChild(globalStyles)
 
     const widget = document.createElement('div')
+    widget.setAttribute('id', 'heypongoWidgetSelector')
     widget.style.cssText = `
       position: fixed;
       z-index: 2147483003;
@@ -353,5 +354,5 @@ class PongoLauncher {
   }
 }
 
-const pongoLauncher = new PongoLauncher('bottom-right', '124521', 'https://static.heypongo.com/api/gift-icon.png', 'https://game-contest-git-bug-alexandrelecorre-sc-6756-663f14-hey-pongo.vercel.app/patoche-burger-contest-game-test?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZGV2LWFwaS5oZXlwb25nby5jb20vYXV0aC9sb2dpbiIsImlhdCI6MTY3MzYwMzI3NywiZXhwIjo0ODA3Mzc1MTk5LCJuYmYiOjE2NzM2MDMyNzcsImp0aSI6InZSVDk0RHlrNGVoaVg2a2siLCJzdWIiOiIxMSIsInBydiI6ImFkNWYyYWEzMDAwMmM0NzBhNTk0MDYxYzE5MzBmOWFmYzZlNWQwY2QiLCJzdG9yZV9pZCI6MSwidHlwZSI6ImNvbnRlc3QtZ2FtZSJ9.kFaFOInCC82VAIP34KKKncDvBzD67S5qI5xsIPLBF3c')
+const pongoLauncher = new PongoLauncher('bottom-right', '124521', 'https://static.heypongo.com/api/gift-icon.png', 'https://contest.heypongo.com/roms-demo-jeu-concours-my-variations?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmhleXBvbmdvLmNvbS9hdXRoL2F1dG9sb2dpbiIsImlhdCI6MTY3NDIwNTQ3MCwiZXhwIjoxNjc1MjA1OTk5LCJuYmYiOjE2NzQyMDU0NzAsImp0aSI6IktDTkt2WFRKRmJMcTBBYWMiLCJzdWIiOiIzODA3IiwicHJ2IjoiYWQ1ZjJhYTMwMDAyYzQ3MGE1OTQwNjFjMTkzMGY5YWZjNmU1ZDBjZCIsInN0b3JlX2lkIjoyOTYwLCJ0eXBlIjoiY29udGVzdC1nYW1lIn0.ojTZp0ckG7OhXPFrHl3rRb8qNIJcySsYHPQMwKbZy8g')
 document.onload = pongoLauncher.init()
