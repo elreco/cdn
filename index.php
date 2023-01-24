@@ -1,1 +1,0 @@
-<h1>CDN of Evilspartan.com</h1>
