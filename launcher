@@ -1,22 +1,22 @@
 class PongoLauncher {
   constructor(position, color, icon, url) {
-    this.position = position
-    this.color = color
-    this.icon = icon
-    this.url = url
-    this.currentState = '0'
-    this.timeoutId = null
+    this.position = position;
+    this.color = color;
+    this.icon = icon;
+    this.url = url;
+    this.currentState = "0";
+    this.timeoutId = null;
   }
 
   #buildWidget() {
-    this.currentState = localStorage.getItem('heypongo-widget-display')
+    this.currentState = localStorage.getItem("heypongo-widget-display");
     if (!this.currentState) {
-      this.currentState = '0'
-      localStorage.setItem('heypongo-widget-display', this.currentState)
+      this.currentState = "0";
+      localStorage.setItem("heypongo-widget-display", this.currentState);
     }
 
-    const container = document.createElement('div')
-    const globalStyles = document.createElement('style')
+    const container = document.createElement("div");
+    const globalStyles = document.createElement("style");
     globalStyles.innerHTML = `
     @keyframes scale-in-center {
       0% {
@@ -54,7 +54,7 @@ class PongoLauncher {
         opacity: 0;
       }
     }
-    `
+    `;
 
     const containerStyle = `
     display: flex;
@@ -73,12 +73,12 @@ class PongoLauncher {
     -moz-user-select: none;
     -khtml-user-select: none;
     -ms-user-select: none;
-    `
+    `;
 
-    container.appendChild(globalStyles)
+    container.appendChild(globalStyles);
 
-    const widget = document.createElement('div')
-    widget.setAttribute('id', 'heypongoWidgetSelector')
+    const widget = document.createElement("div");
+    widget.setAttribute("id", "heypongoWidgetSelector");
     widget.style.cssText = `
       position: fixed;
       z-index: 2147483003;
@@ -89,11 +89,11 @@ class PongoLauncher {
       cursor: pointer;
       box-shadow: rgb(0 0 0 / 6%) 0px 1px 6px 0px, rgb(0 0 0 / 16%) 0px 2px 32px 0px;
       animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    `
-    widget.style.cssText += this.#getWidgetPosition()
-    container.appendChild(widget)
+    `;
+    widget.style.cssText += this.#getWidgetPosition();
+    container.appendChild(widget);
 
-    const widgetPingAnimation = document.createElement('div')
+    const widgetPingAnimation = document.createElement("div");
     widgetPingAnimation.style.cssText = `
       position: absolute;
       width: 43px;
@@ -108,55 +108,62 @@ class PongoLauncher {
       user-select: none;
       background: #${this.color};
       cursor: pointer;
-    `
-    widgetPingAnimation.style.animation = this.currentState === '0' ? 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite' : 'none'
-    widget.appendChild(widgetPingAnimation)
+    `;
+    widgetPingAnimation.style.animation =
+      this.currentState === "0"
+        ? "ping 2s cubic-bezier(0, 0, 0.2, 1) infinite"
+        : "none";
+    widget.appendChild(widgetPingAnimation);
 
-    const imgContainer = document.createElement('div')
-    imgContainer.style.cssText = containerStyle
-    imgContainer.style.opacity = this.currentState === '0' ? '1' : '0'
-    imgContainer.style.transform = this.currentState === '0' ? 'rotate(0deg) scale(1)' : 'rotate(30deg) scale(0)'
-    widget.appendChild(imgContainer)
+    const imgContainer = document.createElement("div");
+    imgContainer.style.cssText = containerStyle;
+    imgContainer.style.opacity = this.currentState === "0" ? "1" : "0";
+    imgContainer.style.transform =
+      this.currentState === "0"
+        ? "rotate(0deg) scale(1)"
+        : "rotate(30deg) scale(0)";
+    widget.appendChild(imgContainer);
 
-    const caretContainer = document.createElement('div')
-    caretContainer.style.cssText = containerStyle
-    caretContainer.style.opacity = this.currentState === '0' ? '0' : '1'
-    caretContainer.style.transform = this.currentState === '0' ? 'rotate(-60deg)' : 'rotate(0deg)'
-    widget.appendChild(caretContainer)
+    const caretContainer = document.createElement("div");
+    caretContainer.style.cssText = containerStyle;
+    caretContainer.style.opacity = this.currentState === "0" ? "0" : "1";
+    caretContainer.style.transform =
+      this.currentState === "0" ? "rotate(-60deg)" : "rotate(0deg)";
+    widget.appendChild(caretContainer);
 
-    const icon = document.createElement('img')
-    icon.src = this.icon
-    icon.style.width = '40px'
-    imgContainer.appendChild(icon)
+    const icon = document.createElement("img");
+    icon.src = this.icon;
+    icon.style.width = "40px";
+    imgContainer.appendChild(icon);
 
-    const caret = document.createElementNS("http://www.w3.org/2000/svg", "svg")
-    caret.setAttribute("viewBox", "0 0 16 14")
+    const caret = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    caret.setAttribute("viewBox", "0 0 16 14");
     caret.setAttribute("width", "16");
-    caret.setAttribute("height", "25")
+    caret.setAttribute("height", "25");
     caret.innerHTML = `
     <path fill="#ffffff" fill-rule="evenodd" clip-rule="evenodd" d="M.116 4.884l1.768-1.768L8 9.232l6.116-6.116 1.768 1.768L8 12.768.116 4.884z"></path>
-    `
-    caretContainer.appendChild(caret)
+    `;
+    caretContainer.appendChild(caret);
 
-    const ifrmContainer = document.createElement('div')
+    const ifrmContainer = document.createElement("div");
     ifrmContainer.style.cssText = `
       position: fixed;
       box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 40px;
-    `
-    ifrmContainer.style.opacity = this.currentState
-    ifrmContainer.style.right = '-9192929px'
+    `;
+    ifrmContainer.style.opacity = this.currentState;
+    ifrmContainer.style.right = "-9192929px";
 
-    const ifrm = document.createElement("iframe")
-    ifrm.setAttribute("src", this.url)
+    const ifrm = document.createElement("iframe");
+    ifrm.setAttribute("src", this.url);
     ifrm.style.cssText = `
       width: 100%;
       border: 0;
       position: relative;
       z-index: 0;
-    `
-    ifrmContainer.appendChild(ifrm)
+    `;
+    ifrmContainer.appendChild(ifrm);
 
-    const closeBtn = document.createElement('div')
+    const closeBtn = document.createElement("div");
     closeBtn.style.cssText = `
       z-index: 2147483004;
       position: absolute;
@@ -172,9 +179,9 @@ class PongoLauncher {
       justify-content: end;
       padding-right: 1rem;
       box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    `
+    `;
 
-    const closeBtnIcon = document.createElement('div')
+    const closeBtnIcon = document.createElement("div");
     closeBtnIcon.style.cssText = `
       width: 25px;
       height: 25px;
@@ -184,175 +191,214 @@ class PongoLauncher {
       align-items: center;
       transform: translateZ(0px);
       transition: background-color 200ms ease 0s;
-    `
+    `;
     closeBtnIcon.innerHTML = `
     <svg focusable="false" aria-hidden="true" style="margin: 0px auto;width: 12px;height: 12px;cursor: pointer;"><g stroke="none" stroke-width="1" fill-rule="evenodd"><g transform="translate(-340.000000, -32.000000)" fill="#000000"><polygon points="350.656537 44 346 39.343463 341.343463 44 340 42.656537 344.656537 38 340 33.343463 341.343463 32 346 36.656537 350.656537 32 352 33.343463 347.343463 38 352 42.656537"></polygon></g></g></svg>
-    `
-    closeBtn.appendChild(closeBtnIcon)
-    document.body.appendChild(ifrmContainer)
+    `;
+    closeBtn.appendChild(closeBtnIcon);
+    document.body.appendChild(ifrmContainer);
     ifrm.onload = () => {
-      ifrmContainer.style.display = this.currentState === '0' ? 'none' : 'block'
-      ifrmContainer.appendChild(closeBtn)
-      this.#setIframeStyle(ifrmContainer, ifrm, widget, closeBtn)
-      document.body.appendChild(container)
-      widget.addEventListener("click", () => this.#toggleVisibility(ifrmContainer, caretContainer, imgContainer, widgetPingAnimation, widget))
-      closeBtn.addEventListener("click", () => this.#toggleVisibility(ifrmContainer, caretContainer, imgContainer, widgetPingAnimation, widget))
-      window.addEventListener('resize', () => this.#setIframeStyle(ifrmContainer, ifrm, widget, closeBtn))
-    }
-
+      ifrmContainer.style.display =
+        this.currentState === "0" ? "none" : "block";
+      ifrmContainer.appendChild(closeBtn);
+      this.#setIframeStyle(ifrmContainer, ifrm, widget, closeBtn);
+      document.body.appendChild(container);
+      widget.addEventListener("click", () =>
+        this.#toggleVisibility(
+          ifrmContainer,
+          caretContainer,
+          imgContainer,
+          widgetPingAnimation,
+          widget
+        )
+      );
+      closeBtn.addEventListener("click", () =>
+        this.#toggleVisibility(
+          ifrmContainer,
+          caretContainer,
+          imgContainer,
+          widgetPingAnimation,
+          widget
+        )
+      );
+      window.addEventListener("resize", () =>
+        this.#setIframeStyle(ifrmContainer, ifrm, widget, closeBtn)
+      );
+    };
   }
 
   #getWidgetPosition() {
     switch (this.position) {
-      case 'top-right':
+      case "top-right":
         return `
           top: 20px;
           right: 20px;
-        `
-      case 'top-left':
+        `;
+      case "top-left":
         return `
           top: 20px;
           left: 20px;
-        `
-      case 'bottom-left':
+        `;
+      case "bottom-left":
         return `
           bottom: 20px;
           left: 20px;
-        `
+        `;
       default:
         return `
           bottom: 20px;
           right: 20px;
-        `
+        `;
     }
   }
 
   #setIfrmContainerPosition(ifrmContainer) {
     switch (this.position) {
-      case 'top-right':
-        ifrmContainer.style.top = '100px'
-        ifrmContainer.style.right = '20px'
-        ifrmContainer.style.bottom = ''
-        ifrmContainer.style.left = ''
-        break
-      case 'top-left':
-        ifrmContainer.style.top = '100px'
-        ifrmContainer.style.left = '20px'
-        ifrmContainer.style.bottom = ''
-        ifrmContainer.style.right = ''
-        break
-      case 'bottom-left':
-        ifrmContainer.style.bottom = '100px'
-        ifrmContainer.style.left = '20px'
-        ifrmContainer.style.top = ''
-        ifrmContainer.style.right = ''
-        break
+      case "top-right":
+        ifrmContainer.style.top = "100px";
+        ifrmContainer.style.right = "20px";
+        ifrmContainer.style.bottom = "";
+        ifrmContainer.style.left = "";
+        break;
+      case "top-left":
+        ifrmContainer.style.top = "100px";
+        ifrmContainer.style.left = "20px";
+        ifrmContainer.style.bottom = "";
+        ifrmContainer.style.right = "";
+        break;
+      case "bottom-left":
+        ifrmContainer.style.bottom = "100px";
+        ifrmContainer.style.left = "20px";
+        ifrmContainer.style.top = "";
+        ifrmContainer.style.right = "";
+        break;
       default:
-        ifrmContainer.style.bottom = '100px'
-        ifrmContainer.style.right = '20px'
-        ifrmContainer.style.top = ''
-        ifrmContainer.style.left = ''
-        break
+        ifrmContainer.style.bottom = "100px";
+        ifrmContainer.style.right = "20px";
+        ifrmContainer.style.top = "";
+        ifrmContainer.style.left = "";
+        break;
     }
   }
 
   #setIframeStyle(ifrmContainer, ifrm, widget, closeBtn) {
-    if("matchMedia" in window) {
-      if(window.matchMedia("(max-width:450px)").matches) {
-        ifrmContainer.style.bottom = '0'
-        ifrmContainer.style.right = '0'
-        ifrmContainer.style.left = '0'
-        ifrmContainer.style.top = '0'
-        ifrmContainer.style.height = '100%'
-        ifrmContainer.style.width = '100%'
-        ifrmContainer.style.minHeight = '250px'
-        ifrmContainer.style.maxHeight = 'none'
-        ifrmContainer.style.overflow = 'hidden'
-        ifrmContainer.style.zIndex = '2147483001'
-        ifrmContainer.style.borderRadius = '0'
+    if ("matchMedia" in window) {
+      if (window.matchMedia("(max-width:450px)").matches) {
+        ifrmContainer.style.bottom = "0";
+        ifrmContainer.style.right = "0";
+        ifrmContainer.style.left = "0";
+        ifrmContainer.style.top = "0";
+        ifrmContainer.style.height = "100%";
+        ifrmContainer.style.width = "100%";
+        ifrmContainer.style.minHeight = "250px";
+        ifrmContainer.style.maxHeight = "none";
+        ifrmContainer.style.overflow = "hidden";
+        ifrmContainer.style.zIndex = "2147483001";
+        ifrmContainer.style.borderRadius = "0";
 
-        ifrm.style.borderRadius = '0'
-        ifrm.style.height = 'calc(100% - 3rem)'
-        ifrm.style.marginTop = '3rem'
+        ifrm.style.borderRadius = "0";
+        ifrm.style.height = "calc(100% - 3rem)";
+        ifrm.style.marginTop = "3rem";
 
-        widget.style.display = this.currentState === '0' ? 'block' : 'none'
+        widget.style.display = this.currentState === "0" ? "block" : "none";
 
-        closeBtn.style.display = 'flex'
+        closeBtn.style.display = "flex";
       } else {
-        this.#setIfrmContainerPosition(ifrmContainer)
-        ifrmContainer.style.height = 'calc(100% - 120px)'
-        ifrmContainer.style.width = '396px'
-        ifrmContainer.style.minHeight = '250px'
-        ifrmContainer.style.maxHeight = '704px'
-        ifrmContainer.style.zIndex = '9999'
-        ifrmContainer.style.borderRadius = '8px'
+        this.#setIfrmContainerPosition(ifrmContainer);
+        ifrmContainer.style.height = "calc(100% - 120px)";
+        ifrmContainer.style.width = "396px";
+        ifrmContainer.style.minHeight = "250px";
+        ifrmContainer.style.maxHeight = "704px";
+        ifrmContainer.style.zIndex = "9999";
+        ifrmContainer.style.borderRadius = "8px";
 
-        ifrm.style.borderRadius = '8px'
-        ifrm.style.height = '100%'
-        ifrm.style.marginTop = '0'
+        ifrm.style.borderRadius = "8px";
+        ifrm.style.height = "100%";
+        ifrm.style.marginTop = "0";
 
-        widget.style.display = 'block'
+        widget.style.display = "block";
 
-        closeBtn.style.display = 'none'
+        closeBtn.style.display = "none";
       }
     }
   }
 
-  #toggleVisibility(ifrmContainer, caretContainer, imgContainer, widgetPingAnimation, widget) {
-    const fadeInAnimation = 'fade-in-bottom 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both'
-    const fadeOutAnimation = 'fade-out-bottom 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both'
+  #toggleVisibility(
+    ifrmContainer,
+    caretContainer,
+    imgContainer,
+    widgetPingAnimation,
+    widget
+  ) {
+    const fadeInAnimation =
+      "fade-in-bottom 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both";
+    const fadeOutAnimation =
+      "fade-out-bottom 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both";
 
-    if (this.currentState === '0') {
+    if (this.currentState === "0") {
       if (this.timeoutId !== null) {
-        clearTimeout(this.timeoutId)
+        clearTimeout(this.timeoutId);
       }
-      ifrmContainer.style.animation = fadeInAnimation
-      ifrmContainer.style.opacity = '1'
-      ifrmContainer.style.display = 'block'
+      ifrmContainer.style.animation = fadeInAnimation;
+      ifrmContainer.style.opacity = "1";
+      ifrmContainer.style.display = "block";
 
-      caretContainer.style.opacity = '1'
-      caretContainer.style.transform = 'rotate(0deg)'
+      caretContainer.style.opacity = "1";
+      caretContainer.style.transform = "rotate(0deg)";
 
-      imgContainer.style.opacity = '0'
-      imgContainer.style.transform = 'rotate(30deg) scale(0)'
-      widgetPingAnimation.style.animation = 'none'
-      if(window.matchMedia("(max-width:450px)").matches) {
-        widget.style.display = 'none'
+      imgContainer.style.opacity = "0";
+      imgContainer.style.transform = "rotate(30deg) scale(0)";
+      widgetPingAnimation.style.animation = "none";
+      if (window.matchMedia("(max-width:450px)").matches) {
+        widget.style.display = "none";
       }
     } else {
-      ifrmContainer.style.animation = fadeOutAnimation
-      ifrmContainer.style.opacity = '0'
-      this.timeoutId = setTimeout(() => ifrmContainer.style.display = 'none', 400)
+      ifrmContainer.style.animation = fadeOutAnimation;
+      ifrmContainer.style.opacity = "0";
+      this.timeoutId = setTimeout(
+        () => (ifrmContainer.style.display = "none"),
+        400
+      );
 
-      caretContainer.style.opacity = '0'
-      caretContainer.style.transform = 'rotate(-60deg)'
+      caretContainer.style.opacity = "0";
+      caretContainer.style.transform = "rotate(-60deg)";
 
-      imgContainer.style.opacity = '1'
-      imgContainer.style.transform = 'rotate(0deg) scale(1)'
+      imgContainer.style.opacity = "1";
+      imgContainer.style.transform = "rotate(0deg) scale(1)";
 
-      widgetPingAnimation.style.animation = 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite'
-      widget.style.display = 'block'
+      widgetPingAnimation.style.animation =
+        "ping 2s cubic-bezier(0, 0, 0.2, 1) infinite";
+      widget.style.display = "block";
     }
-    this.currentState = ifrmContainer.style.opacity
-    localStorage.setItem('heypongo-widget-display', ifrmContainer.style.opacity)
+    this.currentState = ifrmContainer.style.opacity;
+    localStorage.setItem(
+      "heypongo-widget-display",
+      ifrmContainer.style.opacity
+    );
   }
 
   init() {
     const messageHandler = (event) => {
-      if (event.data === '3pc.supported') {
-        this.#buildWidget()
-        window.removeEventListener('message', messageHandler)
-        document.body.removeChild(frame)
+      if (event.data === "3pc.supported") {
+        this.#buildWidget();
+        window.removeEventListener("message", messageHandler);
+        document.body.removeChild(frame);
       }
-    }
-    window.addEventListener('message', messageHandler)
-    const frame = document.createElement('iframe')
-    frame.src = "https://elreco.github.io/3rd-party-cookies-checker/read-localstorage.html"
-    frame.sandbox = "allow-scripts allow-same-origin"
-    frame.style = `display:none`
-    document.body.appendChild(frame)
+    };
+    window.addEventListener("message", messageHandler);
+    const frame = document.createElement("iframe");
+    frame.src =
+      "https://elreco.github.io/3rd-party-cookies-checker/read-localstorage.html";
+    frame.sandbox = "allow-scripts allow-same-origin";
+    frame.style = `display:none`;
+    document.body.appendChild(frame);
   }
 }
 
-const pongoLauncher = new PongoLauncher('bottom-right', '285FB1', 'https://static.heypongo.com/api/gift-icon.png', 'https://contest.heypongo.com/roms-demo-jeu-concours-my-variations?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmhleXBvbmdvLmNvbS9hdXRoL2F1dG9sb2dpbiIsImlhdCI6MTY3NDIwNTQ3MCwiZXhwIjoxNjc1MjA1OTk5LCJuYmYiOjE2NzQyMDU0NzAsImp0aSI6IktDTkt2WFRKRmJMcTBBYWMiLCJzdWIiOiIzODA3IiwicHJ2IjoiYWQ1ZjJhYTMwMDAyYzQ3MGE1OTQwNjFjMTkzMGY5YWZjNmU1ZDBjZCIsInN0b3JlX2lkIjoyOTYwLCJ0eXBlIjoiY29udGVzdC1nYW1lIn0.ojTZp0ckG7OhXPFrHl3rRb8qNIJcySsYHPQMwKbZy8g')
-document.onload = pongoLauncher.init()
+const pongoLauncher = new PongoLauncher(
+  "bottom-left",
+  "000000",
+  "https://static.heypongo.com/api/gift-icon.png",
+  "https://contest.heypongo.com/luis-bien-reveler-les-ghost-carts?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmhleXBvbmdvLmNvbS9hdXRoL2F1dG9sb2dpbiIsImlhdCI6MTY3NDUwOTIxNiwiZXhwIjoyMDE2NDg1OTk5LCJuYmYiOjE2NzQ1MDkyMTYsImp0aSI6IjVzSGdOV0VNVHZwd3ZrT1EiLCJzdWIiOiIzNzAwIiwicHJ2IjoiYWQ1ZjJhYTMwMDAyYzQ3MGE1OTQwNjFjMTkzMGY5YWZjNmU1ZDBjZCIsImNvbnRlc3RfZ2FtZV9pZCI6MTIxNiwic3RvcmVfaWQiOjMxMzgsInR5cGUiOiJjb250ZXN0LWdhbWUifQ.H11iTQqgDE8yc6EF99CjkpTK3Ywoqqt7yjQ5w620U0Y"
+);
+document.onload = pongoLauncher.init();
