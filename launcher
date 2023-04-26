@@ -199,7 +199,7 @@ class PongoLauncher {
     const icon = document.createElement("img");
     icon.src = this.icon;
     icon.style.width = "40px";
-    icon.style.animation = this.currentState === "0" ? "wiggle 1s infinite" : "none";
+    icon.style.animation = "wiggle 1s infinite";
     imgContainer.appendChild(icon);
 
     const caret = document.createElementNS("http://www.w3.org/2000/svg", "svg");
