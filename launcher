@@ -56,7 +56,6 @@ class PongoLauncher {
     }
 
     this.container = document.createElement("div");
-    this.container.id = "pongo-widget";
     const globalStyles = document.createElement("style");
     globalStyles.innerHTML = `
     @keyframes scale-in-center {
@@ -213,6 +212,7 @@ class PongoLauncher {
     caretContainer.appendChild(caret);
 
     this.ifrmContainer = document.createElement("div");
+    this.ifrmContainer.id = 'pongo-widget';
     this.ifrmContainer.style.cssText = `
       position: fixed;
       box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 40px;
